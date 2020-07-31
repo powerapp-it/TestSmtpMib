@@ -3,6 +3,8 @@ using System.Configuration;
 using System.Net;
 using System.Net.Mail;
 using MkSmtpClient = MailKit.Net.Smtp.SmtpClient;
+using MimeKit;
+using MailKit.Security;
 
 namespace TestSmtpMib
 {
@@ -67,7 +69,7 @@ namespace TestSmtpMib
             {
                 try
                 {
-                    var mimeMessage = MimeKit.MimeMessage.CreateFromMailMessage(objMailMessage);
+                    var mimeMessage = MimeMessage.CreateFromMailMessage(objMailMessage);
 
                     string usr = ConfigurationManager.AppSettings["User"];
                     string pwd = ConfigurationManager.AppSettings["Password"];
@@ -77,7 +79,7 @@ namespace TestSmtpMib
 
                     NetworkCredential credentials = new NetworkCredential(usr, pwd, domain);
 
-                    client.Connect(host, port, MailKit.Security.SecureSocketOptions.SslOnConnect);
+                    client.Connect(host, port, SecureSocketOptions.StartTlsWhenAvailable);
                     client.Authenticate(credentials);
                     client.Send(mimeMessage);
                     client.Disconnect(true);

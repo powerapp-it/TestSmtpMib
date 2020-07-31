@@ -68,7 +68,6 @@
     <None Include="App.config" />
     <Content Include="secrets.xml" />
     <None Include="packages.config" />
-    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
